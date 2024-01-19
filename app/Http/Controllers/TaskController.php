@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Task;
 use Illuminate\Http\Request;
+use App\Http\Resources\TaskResource;
 use App\Http\Requests\CreateTaskRequest;
 
 class TaskController extends Controller
@@ -67,7 +68,7 @@ class TaskController extends Controller
             return response()->json([
                 'status' => 'success',
                 'message' => 'Task found successfully',
-                'data' => $task
+                'data' => new TaskResource($task)
             ],200);
         }catch(Exception $e){
             return response()->json([
@@ -87,7 +88,7 @@ class TaskController extends Controller
         return response()->json([
             'status' =>'success',
             'message' => 'Tasks found successfully',
-            'data' => $tasks
+            'data' => TaskResource::collection($tasks)
         ],200);
     }
 
